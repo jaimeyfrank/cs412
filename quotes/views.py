@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import random
 
 """global variables: lists of quotes and images"""
 
@@ -18,8 +19,7 @@ def quote(request):
     """
     View for displaying a random quote and image.
     """
-    import random
-
+   
     random_index = random.randint(0, len(quotes) - 1)
     random_quote = quotes[random_index]
     random_index = random.randint(0, len(quotes) - 1)
@@ -27,7 +27,7 @@ def quote(request):
 
     context = {"quote": random_quote, "image": random_image}
 
-    return render(request, 'quote.html', context)
+    return render(request, 'quotes/quote.html', context)
 
 def show_all(request):
     """
@@ -35,10 +35,10 @@ def show_all(request):
     """
     context = {"quotes": quotes, "images": images}
 
-    return render(request, "show_all.html", context)
+    return render(request, "quotes/show_all.html", context)
 
 def about(request):
     """
     View for displaying information about Christian Bale.
     """
-    return render(request, "about.html")
+    return render(request, "quotes/about.html")

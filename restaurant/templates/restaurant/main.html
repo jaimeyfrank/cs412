@@ -1,0 +1,17 @@
+{% extends "restaurant/base.html" %}
+
+{% block content %}
+
+{% load static %}
+<img src="{% static 'images/pasta.jpeg' %}" alt="Spaghetti">
+
+<h2>Come eat with us</h2>
+<p>Location: 123 Main St</p>
+<p>Hours of Operation:</p>
+<ul>
+    <li>Monday - Friday: 9 AM - 9 PM</li>
+    <li>Saturday: 10 AM - 10 PM</li>
+    <li>Sunday: Closed</li>
+</ul>
+
+{% endblock %}

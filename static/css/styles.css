@@ -95,7 +95,7 @@ button:hover {
 }
 
 img {
-    width: 100%;
+    width: 20%;
     height: auto;
 }
 
@@ -121,4 +121,28 @@ nav a {
 
 nav a:hover {
     text-decoration: underline;
+}
+
+/* Profile Table Styles */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+td img {
+    width: 20%;
+    height: auto;
+    align-items: center;
 }

@@ -142,6 +142,7 @@ th {
 }
 
 td img {
-    width: 10px;
+    width: 20%;
     height: auto;
+    align-items: center;
 }

@@ -9,6 +9,8 @@
 <td>{{ profile.city }}</td>
 </table>
 
+<a href="{% url 'create_status' profile.pk %}">Create Status Message</a>
+
 {% for post in profile.get_status_messages %}
     <h3>{{ post.message }}</h3>
     <p>{{ post.timestamp }}</p>

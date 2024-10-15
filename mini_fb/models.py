@@ -11,3 +11,14 @@ class Profile(models.Model):
     
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+    def get_status_messages(self):
+        return StatusMessage.objects.filter(profile=self).order_by('-timestamp')
+    
+class StatusMessage(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField()
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.profile} - {self.timestamp}'

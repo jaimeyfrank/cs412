@@ -54,7 +54,7 @@ select {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
-    border: 1px solid #ced4da;
+    border: 1px solid #F8F9FA;
     border-radius: 5px;
 }
 
@@ -70,7 +70,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #EA8C55;
 }
 
 /* Confirmation Page Styles */
@@ -110,39 +110,64 @@ nav {
     background-color: #f8f9fa;
     padding: 10px 0;
     display: flex;
-    justify-content: space-between;
 }
 
 nav a {
-    color: #007bff;
+    color: #333;
     padding: 0 25px;
+    margin: auto;
     text-decoration: none;
+    background-color: #DEE2E6;
 }
 
 nav a:hover {
     text-decoration: underline;
+    background-color: #EA8C55;
 }
 
 /* Profile Table Styles */
 table {
-    width: 80%;
+    width: 95%;
     margin: 20px auto;
+    padding: 20px;
     border-collapse: collapse;
 }
 
-th, td {
-    border: 1px solid #dee2e6;
+tr {
+    border: 1px solid #333;
+    display: grid;
+}
+
+td {
+    border: 0px solid #dee2e6;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+}
+
+.profile_pic {
+    border: 0px solid #dee2e6;
     padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #007bff;
-    color: #fff;
-}
-
-td img {
-    width: 20%;
+    margin: 0px;
+    width: auto;
     height: auto;
-    align-items: center;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+    background-color: #DEE2E6;
+}
+
+a:hover {
+    text-decoration: underline;
+    background-color: #EA8C55;
+}
+
+.status {
+    border: 1px solid #333;
+    width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    border-collapse: collapse;
 }

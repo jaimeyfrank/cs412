@@ -22,3 +22,14 @@ class StatusMessage(models.Model):
 
     def __str__(self):
         return f'{self.profile} - {self.timestamp}'
+    
+    def get_images(self):
+        return Image.objects.filter(status_message=self)
+    
+class Image(models.Model):
+    image_file = models.ImageField(upload_to='images/')
+    status_message = models.ForeignKey(StatusMessage, on_delete=models.CASCADE, related_name='images')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Image for {self.status_message} at {self.timestamp}'

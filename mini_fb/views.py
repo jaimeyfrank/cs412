@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from typing import Any
 
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import *
 from .forms import *
 
@@ -61,3 +61,13 @@ class CreateStatusMessageView(CreateView):
     def get_success_url(self) -> str:
         '''Return the URL to redirect to on success.'''
         return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
+    
+class UpdateProfileView(UpdateView):
+    '''the view to update a profile'''
+    form_class = UpdateProfileForm
+    template_name = 'mini_fb/update_profile_form.html'
+    model = Profile
+    
+    def get_success_url(self) -> str:
+        '''Return the URL to redirect to on success.'''
+        return reverse('show_profile', kwargs={'pk': self.object.pk})

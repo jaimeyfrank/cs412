@@ -4,20 +4,24 @@
 
 <h2>{{ profile.first_name }} {{ profile.last_name }}'s Profile</h2>
 <table>
-<td><img src="{{ profile.profile_picture }}" alt="Profile Image"></td>
-<td>{{ profile.first_name }} {{ profile.last_name }}</td>
-<td>{{ profile.city }}</td>
+<td class="profile_image"><img src="{{ profile.profile_picture }}" alt="Profile Image"></td>
+<td>{{ profile.first_name }} {{ profile.last_name }}<br>{{ profile.city }}</td>
 </table>
 
-<a href="{% url 'create_status' profile.pk %}">Create Status Message</a>
-<a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+<h4><a href="{% url 'create_status' profile.pk %}">Create Status Message</a></h4>
+<h4><a href="{% url 'update_profile' profile.pk %}">Update Profile</a></h4>
 
 {% for post in profile.get_status_messages %}
-    <h3>{{ post.message }}</h3>
-    <p>{{ post.timestamp }}</p>
-    {% for img in post.get_images %}
-        <img src="{{ img.image_file.url }}" alt="Image for {{ status.message }}">
-    {% endfor %}
+    <div class="status">
+        {% for img in post.get_images %}
+            <img src="{{ img.image_file.url }}" alt="Image for {{ status.message }}">
+        {% endfor %}
+        <h3>{{ post.message }}</h3>
+        <p>{{ post.timestamp }}</p>
+        <br><a href="{% url 'delete_status' post.pk %}">Delete</a>
+        <br><a href="{% url 'update_status' post.pk %}">Update</a>
+    </div>
 {% endfor %}
+
 
 {% endblock %}

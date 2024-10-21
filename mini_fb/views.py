@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from typing import Any
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import *
 
@@ -71,3 +71,31 @@ class UpdateProfileView(UpdateView):
     def get_success_url(self) -> str:
         '''Return the URL to redirect to on success.'''
         return reverse('show_profile', kwargs={'pk': self.object.pk})
+    
+class DeleteStatusMessageView(DeleteView):
+    '''the view to delete a status message'''
+    model = StatusMessage
+    template_name = 'mini_fb/delete_status_form.html'
+    context_object_name = 'status_message'
+    
+    def get_success_url(self) -> str:
+        '''Return the URL to redirect to on success.'''
+        profile_pk = self.object.profile.pk
+        return reverse('show_profile', kwargs={'pk': profile_pk})
+    
+class UpdateStatusMessageView(UpdateView):
+    '''the view to update a status message'''
+    model = StatusMessage
+    form_class = CreateStatusMessageForm
+    template_name = 'mini_fb/update_status_form.html'
+    
+    def get_context_data(self, **kwargs: Any) -> dict:
+        '''Add the status message to the context data'''
+        context = super().get_context_data(**kwargs)
+        context['status_message'] = self.object
+        return context
+
+    def get_success_url(self) -> str:
+        '''Return the URL to redirect to on success.'''
+        profile_pk = self.object.profile.pk
+        return reverse('show_profile', kwargs={'pk': profile_pk})

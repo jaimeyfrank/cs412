@@ -20,6 +20,24 @@ class Profile(models.Model):
         friends_as_profile2 = Friend.objects.filter(profile2=self).values_list('profile1', flat=True)
         friend_ids = list(friends_as_profile1) + list(friends_as_profile2)
         return Profile.objects.filter(id__in=friend_ids)
+    
+    def add_friend(self, other):
+        if self == other:
+            return
+        
+        if not Friend.objects.filter(
+            models.Q(profile1=self, profile2=other) | models.Q(profile1=other, profile2=self)
+        ).exists():
+            Friend.objects.create(profile1=self, profile2=other)
+
+    def get_friend_suggestions(self):
+        friends_as_profile1 = Friend.objects.filter(profile1=self).values_list('profile2', flat=True)
+        friends_as_profile2 = Friend.objects.filter(profile2=self).values_list('profile1', flat=True)
+        friend_ids = list(friends_as_profile1) + list(friends_as_profile2)
+        
+        suggestions = Profile.objects.exclude(id__in=friend_ids).exclude(id=self.id)
+        
+        return suggestions
 
 
 class StatusMessage(models.Model):
@@ -42,7 +60,7 @@ class Image(models.Model):
     def __str__(self):
         return f'Image for {self.status_message} at {self.timestamp}'
     
-    
+
 class Friend(models.Model):
     profile1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile1')
     profile2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile2')

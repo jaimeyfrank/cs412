@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from typing import Any
 
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .models import *
 from .forms import *
 
@@ -99,3 +99,15 @@ class UpdateStatusMessageView(UpdateView):
         '''Return the URL to redirect to on success.'''
         profile_pk = self.object.profile.pk
         return reverse('show_profile', kwargs={'pk': profile_pk})
+    
+class CreateFriendView(View):
+    def dispatch(self, request, *args, **kwargs):
+        profile = get_object_or_404(Profile, pk=kwargs['pk'])
+        other_profile = get_object_or_404(Profile, pk=kwargs['other_pk'])
+        profile.add_friend(other_profile)
+        return redirect('show_profile', pk=profile.pk)
+    
+class ShowFriendSuggestionsView(DetailView):
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'

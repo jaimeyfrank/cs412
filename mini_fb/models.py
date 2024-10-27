@@ -15,6 +15,13 @@ class Profile(models.Model):
     def get_status_messages(self):
         return StatusMessage.objects.filter(profile=self).order_by('-timestamp')
     
+    def get_friends(self):
+        friends_as_profile1 = Friend.objects.filter(profile1=self).values_list('profile2', flat=True)
+        friends_as_profile2 = Friend.objects.filter(profile2=self).values_list('profile1', flat=True)
+        friend_ids = list(friends_as_profile1) + list(friends_as_profile2)
+        return Profile.objects.filter(id__in=friend_ids)
+
+
 class StatusMessage(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     message = models.TextField()
@@ -26,6 +33,7 @@ class StatusMessage(models.Model):
     def get_images(self):
         return Image.objects.filter(status_message=self)
     
+
 class Image(models.Model):
     image_file = models.ImageField(upload_to='images/')
     status_message = models.ForeignKey(StatusMessage, on_delete=models.CASCADE, related_name='images')
@@ -33,3 +41,12 @@ class Image(models.Model):
 
     def __str__(self):
         return f'Image for {self.status_message} at {self.timestamp}'
+    
+    
+class Friend(models.Model):
+    profile1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile1')
+    profile2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile2')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.profile1} & {self.profile2}'

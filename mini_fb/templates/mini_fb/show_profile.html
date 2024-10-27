@@ -11,6 +11,18 @@
 <h4><a href="{% url 'create_status' profile.pk %}">Create Status Message</a></h4>
 <h4><a href="{% url 'update_profile' profile.pk %}">Update Profile</a></h4>
 
+{% if profile.get_friends is not empty %}
+<h3>Friends</h3>
+<ul>
+    {% for friend in profile.get_friends %}
+        <li>
+            <img src="{{ friend.profile_picture }}" alt="Profile Image" style="width: 50px; height: 50px;">
+            <a href="{% url 'show_profile' friend.pk %}">{{ friend.first_name }} {{ friend.last_name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% for post in profile.get_status_messages %}
     <div class="status">
         {% for img in post.get_images %}

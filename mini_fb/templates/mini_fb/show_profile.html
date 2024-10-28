@@ -11,6 +11,7 @@
 <h4><a href="{% url 'create_status' profile.pk %}">Create Status Message</a></h4>
 <h4><a href="{% url 'update_profile' profile.pk %}">Update Profile</a></h4>
 <h4><a href="{% url 'friend_suggestions' profile.pk %}">Friend Suggestions</a></h4>
+<h4><a href="{% url 'news_feed' profile.pk %}">News Feed</a></h4>
 
 {% if profile.get_friends is not empty %}
 <h3>Friends</h3>

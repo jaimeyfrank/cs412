@@ -1,10 +1,13 @@
 {% extends "mini_fb/base.html" %}
 
 {% block content %}
-<h2>Create a New Profile</h2>
+<h2>Create Profile</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    {% if not user.is_authenticated %}
+        {{ user_form.as_p }}
+    {% endif %}
     <button type="submit">Create Profile</button>
 </form>
 {% endblock %}

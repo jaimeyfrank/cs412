@@ -125,7 +125,7 @@ nav a:hover {
     background-color: #EA8C55;
 }
 
-/* Profile Table Styles */
+/* Table Styles */
 table {
     width: 95%;
     margin: 20px auto;
@@ -133,24 +133,35 @@ table {
     border-collapse: collapse;
 }
 
+thead {
+    background-color: #f2f2f2;
+}
+
+thead th {
+    padding: 10px;
+    border: 1px solid #333;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
 tr {
     border: 1px solid #333;
-    display: grid;
+}
+
+td, th {
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    text-align: left;
 }
 
 td {
-    border: 0px solid #dee2e6;
-    padding: 15px;
     margin: 10px;
-    text-align: center;
-}
-
-.profile_pic {
-    border: 0px solid #dee2e6;
-    padding: 10px;
-    margin: 0px;
-    width: auto;
-    height: auto;
 }
 
 a {
@@ -164,10 +175,57 @@ a:hover {
     background-color: #EA8C55;
 }
 
-.status {
-    border: 1px solid #333;
-    width: 95%;
+/* Form Styles */
+form {
     margin: 20px auto;
-    padding: 20px;
-    border-collapse: collapse;
+    padding: 10px;
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form p {
+    margin: 5px;
+    flex: 1 1 200px;
+}
+
+form button {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #EA8C55;
+}
+
+/* Pagination Styles */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a:hover {
+    background-color: #EA8C55;
+    color: #fff;
+}
+
+.pagination .current {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #fff;
 }

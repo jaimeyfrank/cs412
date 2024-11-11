@@ -1,0 +1,231 @@
+/* styles.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h2 {
+    color: #007bff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #e9ecef;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Form Styles */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #F8F9FA;
+    border-radius: 5px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #EA8C55;
+}
+
+/* Confirmation Page Styles */
+.confirmation {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.confirmation ul {
+    margin: 10px 0;
+}
+
+.confirmation li {
+    background-color: #e9ecef;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+img {
+    width: 20%;
+    height: auto;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    display: flex;
+}
+
+nav a {
+    color: #333;
+    padding: 0 25px;
+    margin: auto;
+    text-decoration: none;
+    background-color: #DEE2E6;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    background-color: #EA8C55;
+}
+
+/* Table Styles */
+table {
+    width: 95%;
+    margin: 20px auto;
+    padding: 20px;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+thead th {
+    padding: 10px;
+    border: 1px solid #333;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+tr {
+    border: 1px solid #333;
+}
+
+td, th {
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    margin: 10px;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+    background-color: #DEE2E6;
+}
+
+a:hover {
+    text-decoration: underline;
+    background-color: #EA8C55;
+}
+
+/* Form Styles */
+form {
+    margin: 20px auto;
+    padding: 10px;
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form p {
+    margin: 5px;
+    flex: 1 1 200px;
+}
+
+form button {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #EA8C55;
+}
+
+/* Pagination Styles */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a:hover {
+    background-color: #EA8C55;
+    color: #fff;
+}
+
+.pagination .current {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #333;
+    background-color: #333;
+    color: #fff;
+}

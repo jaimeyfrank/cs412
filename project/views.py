@@ -76,7 +76,7 @@ class OnboardingView(View):
             'actors': actors,
             'directors': directors
         })
-
+    
     def post(self, request):
         profile_id = request.session.get('profile_id')
         if not profile_id:
@@ -95,13 +95,14 @@ class OnboardingView(View):
             
             for movie_id, rating_value in ratings.items():
                 movie = Movie.objects.get(id=movie_id)
-                Rating.objects.create(profile=profile, movie=movie, rating=rating_value)
+                Rating.objects.create(user=profile, movie=movie, rating=rating_value)
             
+            auto_likes(profile)
             return redirect('recommendations')
         
-        movies = Movie.objects.filter(year__gte=2020)[:25]
-        actors = Actor.objects.filter(movies__in=movies).distinct()[:25]
-        directors = Director.objects.filter(movies__in=movies).distinct()[:25]
+        movies = Movie.objects.filter(year__gte=2020)
+        actors = Actor.objects.filter(movies__in=movies).distinct()
+        directors = Director.objects.filter(movies__in=movies).distinct()
         return render(request, 'project/onboarding.html', {
             'form': form,
             'movies': movies,

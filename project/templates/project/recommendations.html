@@ -1,0 +1,72 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<h1>Recommended Movies</h1>
+<div id="recommended-movies-grid">
+    {% for movie in recommended_movies %}
+        <div class="movie-item" id="movie-{{ movie.id }}">
+            <h3>{{ movie.title }} ({{ movie.year }})</h3>
+            <label>
+                <input type="checkbox" data-movie-id="{{ movie.id }}" class="want-to-watch-checkbox">
+                Add to watchlist
+            </label>
+            <form class="rate-movie-form" data-movie-id="{{ movie.id }}" style="display:inline;">
+                {% csrf_token %}
+                <input type="number" name="rating" min="1" max="5" required>
+                <button type="submit">Rate</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+document.querySelectorAll('.want-to-watch-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const movieId = this.getAttribute('data-movie-id');
+        const wantToWatch = this.checked;
+        
+        fetch("{% url 'recommendations' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: `movie_id=${movieId}&want_to_watch=${wantToWatch}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`movie-${movieId}`).remove();
+            } else {
+                alert('An error occurred');
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.rate-movie-form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const movieId = this.getAttribute('data-movie-id');
+        const rating = this.querySelector('input[name="rating"]').value;
+        
+        fetch("{% url 'recommendations' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: `movie_id=${movieId}&rating=${rating}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`movie-${movieId}`).remove();
+            } else {
+                alert('An error occurred');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

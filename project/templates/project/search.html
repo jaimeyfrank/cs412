@@ -1,0 +1,162 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<body>
+    <h2>Search for movies, actors, or directors</h2>
+    <form method="get">
+        <input type="text" name="q" placeholder="...">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if movies or actors or directors %}
+        {% if movies %}
+            <h3>Movies</h3>
+            <div id="search-movies-grid">
+                {% for movie in movies %}
+                    <div class="movie-item" id="movie-{{ movie.id }}">
+                        <h3>{{ movie.title }} ({{ movie.year }})</h3>
+                        <label>
+                            <input type="checkbox" data-movie-id="{{ movie.id }}" class="want-to-watch-checkbox">
+                            Add to watchlist
+                        </label>
+                        <form class="rate-movie-form" data-movie-id="{{ movie.id }}" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="number" name="rating" min="1" max="5" required>
+                            <button type="submit">Rate</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if actors %}
+            <h3>Actors</h3>
+            <div id="search-actors-grid">
+                {% for actor in actors %}
+                    <div class="actor-item" id="actor-{{ actor.id }}">
+                        <h3>{{ actor.name }}</h3>
+                        <form method="post" class="like-actor-form" data-actor-id="{{ actor.id }}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Like</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if directors %}
+            <h3>Directors</h3>
+            <div id="search-directors-grid">
+                {% for director in directors %}
+                    <div class="director-item" id="director-{{ director.id }}">
+                        <h3>{{ director.name }}</h3>
+                        <form method="post" class="like-director-form" data-director-id="{{ director.id }}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Like</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+</body>
+
+<script>
+document.querySelectorAll('.want-to-watch-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const movieId = this.getAttribute('data-movie-id');
+        const wantToWatch = this.checked;
+        
+        fetch("{% url 'search' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: `movie_id=${movieId}&want_to_watch=${wantToWatch}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`movie-${movieId}`).remove();
+            } else {
+                alert('An error occurred');
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.rate-movie-form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const movieId = this.getAttribute('data-movie-id');
+        const rating = this.querySelector('input[name="rating"]').value;
+        
+        fetch("{% url 'search' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: `movie_id=${movieId}&rating=${rating}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`movie-${movieId}`).remove();
+            } else {
+                alert('An error occurred');
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.like-actor-form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const actorId = this.getAttribute('data-actor-id');
+        
+        fetch("{% url 'search' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: `actor_id=${actorId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`actor-${actorId}`).remove();
+            } else {
+                alert('An error occurred');
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.like-director-form').forEach(form => {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const directorId = this.getAttribute('data-director-id');
+        
+        fetch("{% url 'search' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: `director_id=${directorId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById(`director-${directorId}`).remove();
+            } else {
+                alert('An error occurred');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<h1>Onboarding</h1>
+<form method="post">
+    {% csrf_token %}
+    <h2>Rate Movies</h2>
+    <div id="onboarding-movies-grid">
+        {% for movie in movies %}
+            <div class="movie-item">
+                <h3>{{ movie.title }} ({{ movie.year }})</h3>
+                <input type="number" id="rating-{{ movie.id }}" min="1" max="5" placeholder="Rate">
+            </div>
+        {% endfor %}
+    </div>
+    <h2>Like Actors</h2>
+    <div id="onboarding-actors-grid">
+        {% for actor in actors %}
+            <div class="actor-item">
+                <h3>{{ actor.name }}</h3>
+                <input type="checkbox" name="liked_actors" value="{{ actor.id }}">
+            </div>
+        {% endfor %}
+    </div>
+    <h2>Like Directors</h2>
+    <div id="onboarding-directors-grid">
+        {% for director in directors %}
+            <div class="director-item">
+                <h3>{{ director.name }}</h3>
+                <input type="checkbox" name="liked_directors" value="{{ director.id }}">
+            </div>
+        {% endfor %}
+    </div>
+    <input type="hidden" name="ratings" id="ratings">
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    const ratings = {};
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        if (input.value) {
+            ratings[input.id.split('-')[1]] = input.value;
+        }
+    });
+    document.getElementById('ratings').value = JSON.stringify(ratings);
+});
+</script>
+{% endblock %}
